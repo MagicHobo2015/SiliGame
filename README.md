@@ -2,6 +2,9 @@
 A Space Invaders Like Game. My first C++ game!
 
 ## installation: ## 
-'''make  // creates the binary\n
-// to run \n
-./sili'''
+```
+// creates the binary
+make
+// then to run
+./sili
+```
