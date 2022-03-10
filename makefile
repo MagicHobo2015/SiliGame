@@ -1,17 +1,17 @@
-# my compiler choice
-CXX = clang++
-CXXFLAGS = -std=c++20
-OBJFLAGS = -c
-OBJECTS = main.o # list of all the obj files to watch
+# my compiler, my choice
+CXX = g++
+OBJFLAGS = -c -Wall -g
+OBJECTS = main.o gameBoard.o # list of all the obj files to watch
 OUT_FILE = sili # final binary name 
+LIBS=-lSDL2 -lSDL2main
 
 # build output
 ${OUT_FILE}: ${OBJECTS} 
-	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${OUT_FILE}
+	${CXX} ${OBJECTS} ${LIBS} -o ${OUT_FILE}
 
 # build main.o
-main.o: main.cpp
-	${CXX} ${CXXFLAGS} ${OBJFLAGS} main.cpp
+main.o: main.cpp gameBoard.cpp
+	${CXX} ${OBJFLAGS} $?
 
 
 clean:

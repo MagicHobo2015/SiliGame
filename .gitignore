@@ -31,3 +31,7 @@
 *.out
 *.app
 sili
+
+.vscode
+CMakeLists.txt
+cmake-build-debug/
