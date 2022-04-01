@@ -32,6 +32,10 @@
 *.app
 sili
 
+*.bmp
+*.png
 .vscode
 CMakeLists.txt
 cmake-build-debug/
+images
+.idea

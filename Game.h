@@ -16,12 +16,15 @@ private:
     bool bRunning;
     SDL_Window* mPWindow;
     SDL_Renderer* mPRenderer;
+    SDL_Texture* mPTexture;
+    SDL_Rect mSourceRectangle;
+    SDL_Rect mDestinationRectangle;
 
 public:
     Game();
     ~Game();
 
-    void init();
+    bool init(const char* title, int xPos, int yPos, int width, int height, int flags);
     void render();
     void update();
     void handleEvent();

@@ -10,21 +10,15 @@
 
 int main( int argC, char** argV)
 {
-    GameBoard game = GameBoard();
-    if ( !game.init() ) {
-        std::cout << "Failed to Initialize" << std::endl;
-    }
-    else {
-        // load the image, to the stage
-        if ( !game.loadMedia() ) {
-            std::cout << "Failed to load Media" << std::endl;
-        } else {
-            // apply the img
-            SDL_BlitSurface( game.getGameStage(), nullptr, game.getGameSurface(), nullptr);
-            // Update the surface on the window
-            SDL_UpdateWindowSurface( game.getGameWindow() );
-            // wait
-            SDL_Delay( 10000);
-        }
-    }
+  GameBoard *game = new GameBoard();
+  game->init();
+  game->loadMedia();
+ SDL_BlitSurface( game->getGameStage(), NULL, game->getGameSurface(), NULL);
+  SDL_UpdateWindowSurface( game->getGameWindow() );
+  SDL_Delay(2000);
+  game->closeUp();
+
+    return 0;
 }
+
+// https://github.com/dnivanthaka/sdl-game-development-lessons
