@@ -12,7 +12,7 @@ int main( int argC, char** argV)
 {
   GameBoard *game = new GameBoard();
   game->init();
-  game->loadMedia();
+  game->
  SDL_BlitSurface( game->getGameStage(), NULL, game->getGameSurface(), NULL);
   SDL_UpdateWindowSurface( game->getGameWindow() );
   SDL_Delay(2000);

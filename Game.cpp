@@ -7,6 +7,8 @@
 #include "Game.h"
 #include <iostream>
 
+
+
 Game::Game() {};
 
 bool Game::init(const char* title, int xPos, int yPos, int width, int height, int flags)
@@ -44,9 +46,6 @@ bool Game::init(const char* title, int xPos, int yPos, int width, int height, in
     }
     std::cout << "Init success" << std::endl;
     bRunning = true;
-
-    SDL_Surface* tempSurface = SDL_LoadBMP("../images/rider.bmp");
-    mPTexture = SDL_CreateTextureFromSurface(mPRenderer, tempSurface);
 }
 
 void Game::render()
