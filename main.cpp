@@ -1,23 +1,37 @@
 /***********************************************************************************************************************
  *      Author: Joshua Land                                                                                            *
- *      Description: TODO; Figure out what goes here..                                                                 *
+ *      Description: This is just a space Invaders ripoff, Im just trying to learn basic graphics and oop concepts.    *
  *      Contact:    Joshua.Land6@gmail.com                                                                             *
- *                             TODO: Add game name here                                                                *
+ *                             INVADERS!                                                                               *
+ *  Big thanks to MillionthVector for posting this free spaceship, checkout his blog                                   *
+ * @ http://millionthvector.blogspot.de                                                                                *
  **********************************************************************************************************************/
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <iostream>
-#include "gameBoard.h"
+#include "Game.h"
 
 int main( int argC, char** argV)
 {
-  GameBoard *game = new GameBoard();
-  game->init();
-  game->
- SDL_BlitSurface( game->getGameStage(), NULL, game->getGameSurface(), NULL);
-  SDL_UpdateWindowSurface( game->getGameWindow() );
-  SDL_Delay(2000);
-  game->closeUp();
+  const char* file = "./images/backGrounds/two.jpg";
+  SDL_Texture *background = nullptr;
+  SDL_Surface *holder = nullptr;
 
+  Game *game = new Game();
+  game->init();
+
+  holder = IMG_Load( file );
+  background = SDL_CreateTextureFromSurface( game->getRenderer(), holder ); 
+  
+  
+  game->render( backgorund );
+  
+  
+  while(game->running())
+  {
+    game->handleEvent();
+  }
+  game->clean();
     return 0;
 }
 

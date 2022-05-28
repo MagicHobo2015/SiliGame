@@ -2,61 +2,83 @@
  *      Author: Joshua Land                                                                                            *
  *      Description: contains the game board and all the stuff that goes with it.                                      *
  *      Contact:    Joshua.Land6@gmail.com                                                                             *
- *                             TODO: Add game name here                                                                *
+ *                             INVADERS!                                                                               *
  **********************************************************************************************************************/
 #include "Game.h"
 #include <iostream>
+#include <SDL2/SDL.h>
 
-
+// define a couple constants
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
 Game::Game() {};
 
-bool Game::init(const char* title, int xPos, int yPos, int width, int height, int flags)
+bool Game::init()
 {
     // attempt to initialize SDL
-    if ( SDL_Init( SDL_INIT_EVERYTHING ) == 0 ) {
+    // TODO: ADD AUDIO TO INIT
+    if ( SDL_Init( SDL_INIT_VIDEO) == 0) {
+
+
+        // DEBUGGING ONLY
         std::cout << "SDL init success \n";
+        
+        
+        
         // init the window
-        mPWindow = SDL_CreateWindow(title, xPos, yPos, width, height, flags);
-        if ( mPWindow != 0 ) {
-            // window success
+        mainWindow = SDL_CreateWindow("INVADERS!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if ( mainWindow != 0 ) {
+            // DEBUGGING ONLY
             std::cout << "Window creation success \n";
-            mPRenderer = SDL_CreateRenderer(mPWindow, -1, 0);
-            if ( mPRenderer != 0 ) {
-                // renderer success
+            gameRenderer = SDL_CreateRenderer(mainWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if ( gameRenderer != 0 ) {
+
+                // DEBUGGING ONLY
                 std::cout << "Renderer creation success \n";
-                SDL_SetRenderDrawColor(mPRenderer, 255, 255, 255, 255);
+
+                SDL_SetRenderDrawColor(gameRenderer, basicColor.r, basicColor.g, basicColor.b, basicColor.a);
             }
             else
             {
-                std::cout << "Renderer init fail \n";
+                // tells you why it could not create a renderer.
+                std::cout << "Renderer init failed, because: \n\t" << SDL_GetError() << std::endl;
                 return false;
             }
         }
         else
         {
-            std::cout << "window init fail \n";
+            // tells why the window could not be created.
+            std::cout << "window init fail: \n\t" << SDL_GetError() << std::endl;
             return false;
         }
     }
     else
     {
-        std::cout << "SDL init fail \n";
+        // DEBUGGING ONLY
+        std::cout << "SDL init fail \n\t" << SDL_GetError() << std::endl;
+
         return false;
     }
+    // DEBUGGING ONLY
     std::cout << "Init success" << std::endl;
-    bRunning = true;
+
+    this->isRunning = true;
+    return true;
 }
 
-void Game::render()
+void Game::render(SDL_Texture *gameScreen)
 {
     // Clear the renderer to draw the draw color.
-    SDL_RenderClear(mPRenderer);
+    SDL_RenderClear(gameRenderer);
+
+    // apply the texture
+   SDL_RenderCopy(gameRenderer, gameScreen, NULL, NULL);
 
     // Draw to the screen
-    SDL_RenderPresent(mPRenderer);
+    SDL_RenderPresent(gameRenderer);
 }
-
+// all this does is check for quit condition..
 void Game::handleEvent()
 {
     SDL_Event event;
@@ -65,7 +87,7 @@ void Game::handleEvent()
         switch ( event.type )
         {
             case SDL_QUIT:
-                bRunning = false;
+                this->isRunning = false;
                 break;
 
             default:
@@ -73,13 +95,17 @@ void Game::handleEvent()
         }
     }
 }
-
+// this frees up memory
 void Game::clean()
 {
+    // DEBUGGING ONLY
     std::cout << "cleaning game" << std::endl;
-    SDL_DestroyWindow( mPWindow );
-    SDL_DestroyRenderer( mPRenderer );
+    // in reverse order here
+    SDL_DestroyRenderer( gameRenderer );
+    gameRenderer = nullptr;
+    SDL_DestroyTexture( gameScreen );
+    gameScreen = nullptr;
+    SDL_DestroyWindow( mainWindow );
+    mainWindow = nullptr;
     SDL_Quit();
 }
-
-void Game::update() {};
