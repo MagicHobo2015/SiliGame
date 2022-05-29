@@ -1,6 +1,7 @@
 /***********************************************************************************************************************
  *      Author: Joshua Land                                                                                            *
- *      Description: Responsible for the renderer and nuts and bolts of init                                           *
+ *      Description: Two classes here, graphics class inits sdl and creates a texture for every thing else to use      *
+ *                      The game class will bring all the elements of the game together                                *
  *      Contact:    Joshua.Land6@gmail.com                                                                             *
  *                             INVADERS!                                                                               *
  **********************************************************************************************************************/
@@ -10,7 +11,8 @@
 
 #include <SDL2/SDL.h>
 
-class Game
+// this creates all the stuff sdl2 needs for rendering, other classes only the texture from here.
+class Graphics
 {
 private:
 
@@ -22,15 +24,13 @@ private:
     SDL_Window *mainWindow = nullptr;
     // the renderer that everything will use to get drawn.
     SDL_Renderer *gameRenderer = nullptr;
-    // the stage surface 
-    SDL_Surface *mainStage = nullptr;
     // off to render render land
     SDL_Texture *toBeRendered = nullptr;
 
 public:
     // constructor and destructor just so i remember they are here.
-    Game();
-    ~Game();
+    Graphics();
+    ~Graphics();
 
     // this will initialize the window and renderer not the game elements.
     bool init();
@@ -42,7 +42,7 @@ public:
     void clean();
     // getter
     bool running() { return this->isRunning; }
-    SDL_Texture* getGameScreen() { return this->gameScreen; }
+    SDL_Texture* getTexture() { return this->toBeRendered; }
     SDL_Renderer* getRenderer() { return this->gameRenderer; }
 };
 #endif //SILIGAME_GAME_H

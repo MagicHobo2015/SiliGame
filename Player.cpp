@@ -8,36 +8,50 @@
  **********************************************************************************************************************/
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
-#include "Game.h"
 #include "Player.h"
+// DEBUGGING ONLY
+#include <iostream>
 
-int main( int argC, char** argV)
+// the constructor loads the sprite sheet
+Player::Player()
 {
-  const char* file = "./images/backGrounds/two.jpg";
-  SDL_Texture *background = nullptr;
-  SDL_Surface *holder = nullptr;
+    // load the sprite sheet to the surface
+    this->pImage = IMG_Load( pSpriteSheet );
+    
+    // check if it was done correctly
+    if ( this->pImage != nullptr )
+    {
+        // DEBUGGING ONLY
+        std::cout << "Player Sprite sheet init successful" << std::endl;
 
-  Graphics *game = new Graphics();
-  Player *player = new Player();
+    } else
+    {
+        std::cout << "Something went wrong with the player SpriteSheet " << std::endl;
+    }
 
-  game->init();
-
-  holder = IMG_Load( file );
-  player->draw( holder );
-
-  background = SDL_CreateTextureFromSurface( game->getRenderer(), holder ); 
-  
-  
-  game->render( background );
-  
-  
-  while(game->running())
-  {
-    game->handleEvent();
-  }
-  game->clean();
-    return 0;
 }
 
-// https://github.com/dnivanthaka/sdl-game-development-lessons
+Player::~Player()
+{
+    // DEBUGGING ONLY
+    std::cout << "Cleaning up the player" << std::endl;
+
+    SDL_FreeSurface( this->pImage );
+    this->pImage = nullptr;
+}
+
+void Player::increasePoints(int points)
+{
+    this->points += points;
+}
+
+void Player::setX(int deltaX)
+{
+    this->personalBubble.x += deltaX;
+}
+
+// this draws the player on a surface.
+void Player::draw(SDL_Surface *stage)
+{
+    SDL_BlitSurface( this->pImage, NULL, stage, &personalBubble );
+}

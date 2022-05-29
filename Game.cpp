@@ -12,9 +12,9 @@
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 
-Game::Game() {};
+Graphics::Graphics() {};
 
-bool Game::init()
+bool Graphics::init()
 {
     // attempt to initialize SDL
     // TODO: ADD AUDIO TO INIT
@@ -67,7 +67,7 @@ bool Game::init()
     return true;
 }
 
-void Game::render(SDL_Texture *gameScreen)
+void Graphics::render(SDL_Texture *gameScreen)
 {
     // Clear the renderer to draw the draw color.
     SDL_RenderClear(gameRenderer);
@@ -79,7 +79,7 @@ void Game::render(SDL_Texture *gameScreen)
     SDL_RenderPresent(gameRenderer);
 }
 // all this does is check for quit condition..
-void Game::handleEvent()
+void Graphics::handleEvent()
 {
     SDL_Event event;
     if ( SDL_PollEvent( &event ) )
@@ -96,15 +96,15 @@ void Game::handleEvent()
     }
 }
 // this frees up memory
-void Game::clean()
+void Graphics::clean()
 {
     // DEBUGGING ONLY
     std::cout << "cleaning game" << std::endl;
     // in reverse order here
     SDL_DestroyRenderer( gameRenderer );
     gameRenderer = nullptr;
-    SDL_DestroyTexture( gameScreen );
-    gameScreen = nullptr;
+    SDL_DestroyTexture( toBeRendered );
+    toBeRendered = nullptr;
     SDL_DestroyWindow( mainWindow );
     mainWindow = nullptr;
     SDL_Quit();
