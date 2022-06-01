@@ -6,38 +6,21 @@
  *  Big thanks to MillionthVector for posting this free spaceship, checkout his blog                                   *
  * @ http://millionthvector.blogspot.de                                                                                *
  **********************************************************************************************************************/
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <iostream>
 #include "Game.h"
-#include "Player.h"
 
 int main( int argC, char** argV)
 {
-  const char* file = "./images/backGrounds/two.jpg";
-  SDL_Texture *background = nullptr;
-  SDL_Surface *holder = nullptr;
 
-  Graphics *game = new Graphics();
-  Player *player = new Player();
-
+  Game *game = new Game();
+  
   game->init();
 
-  holder = IMG_Load( file );
-  player->draw( holder );
-
-  background = SDL_CreateTextureFromSurface( game->getRenderer(), holder ); 
-  
-  
-  game->render( background );
-  
-  
-  while(game->running())
+  while( game->isRunning() )
   {
     game->handleEvent();
+    game->animationStep();
   }
-  game->clean();
     return 0;
 }
 
-// https://github.com/dnivanthaka/sdl-game-development-lessons

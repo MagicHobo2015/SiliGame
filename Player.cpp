@@ -53,5 +53,5 @@ void Player::setX(int deltaX)
 // this draws the player on a surface.
 void Player::draw(SDL_Surface *stage)
 {
-    SDL_BlitSurface( this->pImage, NULL, stage, &personalBubble );
+    SDL_BlitScaled( this->pImage, NULL, stage, &personalBubble );
 }
