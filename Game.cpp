@@ -101,9 +101,6 @@ Game::Game()
     this->graphics = new Graphics();
     // init the graphics objects
     this->graphics->init();
-
-    // load background
-    this->stage = IMG_Load( file );
 }
 
 // this will create the player, and the enemies.
@@ -157,6 +154,7 @@ void Game::animationStep()
     present. 
     */
     // TODO: some background stuff
+    
 
     // draw the player to the surface
     this->pOne->draw( this->stage );

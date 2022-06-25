@@ -1,42 +1,28 @@
-/***********************************************************************************************************************
- *      Author: Joshua Land                                                                                            *
- *      Description: This is just a space Invaders ripoff, Im just trying to learn basic graphics and oop concepts.    *
- *      Contact:    Joshua.Land6@gmail.com                                                                             *
- *                             INVADERS!                                                                               *
- *  Big thanks to MillionthVector for posting this free spaceship, checkout his blog                                   *
- * @ http://millionthvector.blogspot.de                                                                                *
- **********************************************************************************************************************/
-#ifndef SILIGAME_PLAYER_H
-#define SILIGAME_PLAYER_H
+// header guards
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #include <SDL2/SDL.h>
+#include "GameElement.h"
 
-
-class Player
+class Player : public GameElement
 {
 private:
-    const char* pSpriteSheet = "./images/playerShip/fighter.png";
-    bool alive = true;
-    int lives = 3;
-    int points = 0;
-    SDL_Rect personalBubble = {600, 1000, 200, 200};
-    SDL_Surface *pImage = nullptr;
-    
+    const char* playerPNG = "./assets/player_ship.png";
+    SDL_Texture *playerTexture = nullptr;
+
 public:
-    // the constructor is going to load the sprite sheet
+    // Default constructor
     Player();
-    // this is going to release the memory of the player sprite sheet, maybe play a sound
-    ~Player();
-    // mutator
-    void increasePoints(int increase);
-    void setX(int deltaX);
-    // accessor
-    int getPoints() { return this->points; }
-    SDL_Rect* getRect() { return &personalBubble; }
-    // this will draw the ship
-    void draw(SDL_Surface *stage);
-    // this will move the ship
-    void movePlayer();
+    // create and set the position
+    Player( int x, int y );
+    // non-default w/ scaling
+    Player( int x, int y, int width, int height );
+    // set the image for the player
+    void setTexture( SDL_Texture *texture );
+    // the two over-rides
+    void draw( SDL_Renderer *board ) override;
+    void move() override;
 };
 
 #endif
