@@ -1,26 +1,40 @@
-/***********************************************************************************************************************
- *      Author: Joshua Land                                                                                            *
- *      Description: This is just a space Invaders ripoff, Im just trying to learn basic graphics and oop concepts.    *
- *      Contact:    Joshua.Land6@gmail.com                                                                             *
- *                             INVADERS!                                                                               *
- *  Big thanks to MillionthVector for posting this free spaceship, checkout his blog                                   *
- * @ http://millionthvector.blogspot.de                                                                                *
- **********************************************************************************************************************/
+/************************************************************************************************************
+*   Author:     Joshua Land                                                                                 *
+*   Description:    This is just a game that is heavily inspired by SPACE INVADERS and pitifully executed   *
+*   FYI:    my first game without a tutorial, just using the sdl2 documentation and other references..      *
+*              SPACE INVADERS LIKE GAME-----> SILIGAME                                                      *
+*************************************************************************************************************/
 #include <iostream>
-#include "Game.h"
+#include "Graphics.h"
+#include <SDL2/SDL.h>
 
-int main( int argC, char** argV)
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
+
+int main( int argC, char** argV )
 {
+    // stop the game flag
+    bool quit = false;
+    SDL_Event event;
+    Graphics graphic = Graphics( SCREEN_WIDTH, SCREEN_HEIGHT );
+    
+    while( !quit )
+    {
+        // this clears the renderer
+        graphic.loop();
+        graphic.showRenderer();
 
-  Game *game = new Game();
-  
-  game->init();
 
-  while( game->isRunning() )
-  {
-    game->handleEvent();
-    game->animationStep();
-  }
+        while( SDL_PollEvent( &event ) != 0 )
+        {
+            if( event.type == SDL_QUIT )
+            {
+                quit = true;
+            }
+        }
+
+    }
+
+    graphic.cleanUp();
     return 0;
 }
-

@@ -1,7 +1,7 @@
 # my compiler, my choice
 CXX = g++
 OBJFLAGS = -c -Wall -g
-OBJECTS = main.o Game.o Player.o GameElement.o Opponent.o# list of all the obj files to watch
+OBJECTS = main.o Graphics.o# list of all the obj files to watch
 OUT_FILE = sili # final binary name 
 LIBS=-lSDL2 -lSDL2main -lSDL2_image
 
